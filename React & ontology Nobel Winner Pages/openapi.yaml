@@ -1,0 +1,251 @@
+openapi: 3.0.0
+info:
+  title: Semantic Web, RDF, SPARQL, Web Services, UI
+  description: The API for the project 5 - Noble Winner
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/alaliter/Project5-Noble/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://tinman.cs.gsu.edu:5001
+  description: SwaggerHub API Auto Mocking
+paths:
+  /nobel/nations:
+    get:
+      tags:
+      - Nations
+      description: Return sorted names of all nations
+      operationId: getNations
+      responses:
+        200:
+          description: All the nations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nations'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /nobel/categories:
+    get:
+      tags:
+      - Categories
+      description: Return sorted names of all nobel categories
+      operationId: getCategories
+      responses:
+        200:
+          description: All the categories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categories'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /nobel/years:
+    get:
+      tags:
+      - Years
+      description: Return sorted years nobels are awarded
+      operationId: getYears
+      responses:
+        200:
+          description: All the years
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Years'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /nobel/{year}:
+    get:
+      tags:
+      - NobelYear
+      operationId: getNobelYear
+      parameters:
+      - name: year
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Return list of all nobel winners for the given year
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NobleYear'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /nobel/nations/{nation}:
+    get:
+      tags:
+      - NobelNation
+      operationId: getNobelNation
+      parameters:
+      - name: nation
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Return list of all nobel winners for the given nation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NobelNation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /nobel/categories/{category}:
+    get:
+      tags:
+      - NobelCategory
+      operationId: getNobelCategory
+      parameters:
+      - name: category
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Return list of all nobel winners for the given category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NobelCategory'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /nobel/{year}/{category}:
+    get:
+      tags:
+      - NobelCategory
+      operationId: getNobelYearCategory
+      parameters:
+      - name: year
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Return list of all nobel winners for the given category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NobelYearCategory'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Nations:
+      type: object
+      properties:
+        nation:
+          type: string
+          example: everything is ok
+    Categories:
+      type: object
+      properties:
+        catagory:
+          type: string
+          example: everything is ok
+    Years:
+      type: object
+      properties:
+        year:
+          type: string
+          example: everything is ok
+    NobleYear:
+      type: object
+      properties:
+        year:
+          type: string
+          example: everything is ok
+    NobelNation:
+      type: object
+      properties:
+        category:
+          type: string
+          example: everything is ok
+        winner:
+          type: string
+          example: everything is ok
+        year:
+          type: string
+          example: everything is ok
+    NobelCategory:
+      type: object
+      properties:
+        category:
+          type: string
+          example: everything is ok
+        winner:
+          type: string
+          example: everything is ok
+        year:
+          type: string
+          example: everything is ok
+    NobelYearCategory:
+      type: object
+      properties:
+        category:
+          type: string
+          example: everything is ok
+        winner:
+          type: string
+          example: everything is ok
+        year:
+          type: string
+          example: everything is ok
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
